@@ -3,62 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Musicdle</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
+<div class="container text-center mt-4">
 
     <!-- HOME -->
     <div id="homeScreen">
-        <h1>🎵 Musicdle</h1>
+        <h1 class="mb-4">🎵 Musicdle</h1>
 
-        <button onclick="startMode('daily')">🎯 Modo Diario</button>
-        <button onclick="startMode('infinite')">♾️ Modo Infinito</button>
+        <button class="btn btn-primary w-100 mb-2" onclick="startMode('daily')">
+            🎯 Modo Diario
+        </button>
+
+        <button class="btn btn-secondary w-100" onclick="startMode('infinite')">
+            ♾️ Modo Infinito
+        </button>
     </div>
 
     <!-- GAME -->
     <div id="gameScreen" style="display:none;">
 
-        <h1>🎵 Musicdle</h1>
+        <h1 class="mb-3">🎵 Musicdle</h1>
 
-        <img id="albumImage">
+        <img id="albumImage" class="img-fluid rounded mb-3">
 
-        <!-- INPUT + AUTOCOMPLETE -->
-        <div class="input-container">
-            <input 
-                type="text" 
-                id="guessInput" 
-                placeholder="Adivina el álbum..."
-                autocomplete="off"
-            >
+        <!-- INPUT -->
+        <input type="text" id="guessInput" class="form-control mb-2"
+               placeholder="Adivina el álbum...">
 
-            <div id="suggestions" class="suggestions"></div>
-        </div>
-        
-        <div id="progressContainer">
-            <div id="progressBar"></div>
-        </div>
-        <p id="progressText"></p>
+        <div id="suggestions" class="list-group mb-3"></div>
+
         <!-- WORDLE -->
-        <div id="attemptsContainer"></div>
+        <div id="attemptsContainer" class="d-flex justify-content-center gap-2 mb-3"></div>
 
         <!-- BOTONES -->
-        <div class="buttons">
-            <button onclick="checkGuess()">Enviar</button>
-            <button onclick="giveHint()">Pista</button>
-            <button onclick="shareResult()">Compartir</button>
-            <button onclick="goHome()">Salir</button>
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+            <button class="btn btn-success" onclick="checkGuess()">Enviar</button>
+            <button class="btn btn-warning" onclick="giveHint()">Pista</button>
+            <button class="btn btn-info" onclick="shareResult()">Compartir</button>
+            <button class="btn btn-danger" onclick="goHome()">Salir</button>
         </div>
 
         <!-- VIDAS -->
-        <div id="lives"></div>
+        <div id="lives" class="mb-2"></div>
+
+        <!-- PROGRESO -->
+        <div id="progressContainer" class="mb-2">
+            <div id="progressBar"></div>
+        </div>
+        <p id="progressText"></p>
 
         <!-- STATS -->
         <p id="stats"></p>
         <p id="streak"></p>
 
-        <!-- RESULTADO -->
         <p id="result"></p>
 
     </div>
@@ -71,8 +77,8 @@
         <h2 id="endTitle"></h2>
         <p id="endMessage"></p>
 
-        <button onclick="startGame()">Jugar otra vez</button>
-        <button onclick="goHome()">Salir</button>
+        <button class="btn btn-primary mb-2" onclick="startGame()">Jugar otra vez</button>
+        <button class="btn btn-secondary" onclick="goHome()">Salir</button>
     </div>
 </div>
 

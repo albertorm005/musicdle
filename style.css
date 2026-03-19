@@ -210,3 +210,22 @@ p {
     margin-top: 5px;
     color: #aaa;
 }
+/* 📱 MOBILE FIX */
+@media (max-width: 576px) {
+
+    #albumImage {
+        width: 90%;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .modal-content {
+        width: 90%;
+    }
+}
