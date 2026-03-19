@@ -1,0 +1,212 @@
+/* 🌑 BASE */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0d0d0d;
+    color: white;
+}
+
+/* 📦 CONTENEDOR */
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+/* 🖼️ IMAGEN */
+#albumImage {
+    width: 250px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: filter 0.4s ease, transform 0.2s ease;
+}
+
+/* 🎉 WIN */
+.win {
+    box-shadow: 0 0 25px #00ffcc;
+    transform: scale(1.08);
+}
+
+/* 📦 INPUT + AUTOCOMPLETE */
+.input-container {
+    position: relative;
+}
+
+/* ✏️ INPUT */
+input {
+    width: 80%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    margin-top: 10px;
+}
+
+/* 🔍 SUGERENCIAS */
+.suggestions {
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    background: #222;
+    border-radius: 8px;
+    margin-top: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.suggestions div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestions div:hover {
+    background: #333;
+}
+
+/* 🔘 BOTONES */
+.buttons {
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 8px;
+    background: #6c5ce7;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #5a4bd1;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* ❤️ TEXTO */
+p {
+    margin: 8px 0;
+}
+
+/* 🎯 RESULTADO */
+#result {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* 🎯 WORDLE */
+#attemptsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.attempt-box {
+    width: 35px;
+    height: 35px;
+    background: #444;
+    border-radius: 5px;
+}
+
+.attempt-box.correct {
+    background: #4CAF50;
+}
+
+.attempt-box.wrong {
+    background: #e74c3c;
+}
+
+/* ❤️ CORAZONES */
+#lives {
+    margin-top: 10px;
+}
+
+#lives span {
+    font-size: 26px;
+    margin: 0 5px;
+    transition: 0.3s;
+}
+
+#lives span.off {
+    opacity: 0.3;
+}
+
+/* ❌ SHAKE INPUT */
+@keyframes shakeInput {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+    100% { transform: translateX(0); }
+}
+
+.input-error {
+    animation: shakeInput 0.3s;
+    border: 2px solid #e74c3c;
+}
+
+/* 🏠 HOME */
+#homeScreen {
+    text-align: center;
+    margin-top: 100px;
+}
+
+#homeScreen button {
+    display: block;
+    width: 200px;
+    margin: 10px auto;
+    font-size: 18px;
+}
+
+/* 🌑 MODAL */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 300px;
+}
+
+/* 📊 PROGRESO */
+#progressContainer {
+    width: 80%;
+    height: 10px;
+    background: #333;
+    border-radius: 10px;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: #00ffcc;
+    transition: 0.3s;
+}
+
+#progressText {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #aaa;
+}

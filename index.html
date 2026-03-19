@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Musicdle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HOME -->
+    <div id="homeScreen">
+        <h1>🎵 Musicdle</h1>
+
+        <button onclick="startMode('daily')">🎯 Modo Diario</button>
+        <button onclick="startMode('infinite')">♾️ Modo Infinito</button>
+    </div>
+
+    <!-- GAME -->
+    <div id="gameScreen" style="display:none;">
+
+        <h1>🎵 Musicdle</h1>
+
+        <img id="albumImage">
+
+        <!-- INPUT + AUTOCOMPLETE -->
+        <div class="input-container">
+            <input 
+                type="text" 
+                id="guessInput" 
+                placeholder="Adivina el álbum..."
+                autocomplete="off"
+            >
+
+            <div id="suggestions" class="suggestions"></div>
+        </div>
+        
+        <div id="progressContainer">
+            <div id="progressBar"></div>
+        </div>
+        <p id="progressText"></p>
+        <!-- WORDLE -->
+        <div id="attemptsContainer"></div>
+
+        <!-- BOTONES -->
+        <div class="buttons">
+            <button onclick="checkGuess()">Enviar</button>
+            <button onclick="giveHint()">Pista</button>
+            <button onclick="shareResult()">Compartir</button>
+            <button onclick="goHome()">Salir</button>
+        </div>
+
+        <!-- VIDAS -->
+        <div id="lives"></div>
+
+        <!-- STATS -->
+        <p id="stats"></p>
+        <p id="streak"></p>
+
+        <!-- RESULTADO -->
+        <p id="result"></p>
+
+    </div>
+
+</div>
+
+<!-- MODAL -->
+<div id="endScreen" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h2 id="endTitle"></h2>
+        <p id="endMessage"></p>
+
+        <button onclick="startGame()">Jugar otra vez</button>
+        <button onclick="goHome()">Salir</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
