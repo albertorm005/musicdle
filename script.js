@@ -465,9 +465,8 @@ window.addEventListener("DOMContentLoaded", () => {
 // 📤 SHARE
 function shareResult() {
 
-    let text = "Musicdle 🎵\n";
+    let text = "🎵 Musicdle\n";
 
-    // construir resultado tipo Wordle
     let resultLine = "";
 
     for (let i = 0; i < 5; i++) {
@@ -479,14 +478,28 @@ function shareResult() {
 
     text += resultLine + "\n";
 
-    const tries = attempts.filter(a => a === "🟩").length > 0
+    const tries = attempts.includes("🟩")
         ? attempts.length
         : "X";
 
-    text += "🔥 " + tries + " intentos";
+    text += "🔥 " + tries + " intentos\n";
+    text += "❤️ " + lives + " vidas\n";
 
-    // copiar al portapapeles
-    navigator.clipboard.writeText(text);
+    if (typeof timeLeft !== "undefined") {
+        text += "⏱️ " + timeLeft + "s\n";
+    }
 
-    alert("📋 Resultado copiado!");
+    text += "https://musicdle-chi.vercel.app/";
+
+    // 📱 SHARE NATIVO (MÓVIL)
+    if (navigator.share) {
+        navigator.share({
+            title: "Musicdle",
+            text: text
+        });
+    } else {
+        // 💻 FALLBACK PC
+        navigator.clipboard.writeText(text);
+        alert("📋 Resultado copiado!");
+    }
 }
