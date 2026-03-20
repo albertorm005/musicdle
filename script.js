@@ -6,6 +6,8 @@ let attempts = [];
 let gameOver = false;
 let hintsUsed = 0;
 let gameMode = "daily";
+let timeLeft;
+let timerInterval;
 
 let score = 0;
 let bestScore = parseInt(localStorage.getItem("bestScore")) || 0;
@@ -175,6 +177,8 @@ async function startGame() {
     if (streak) {
         document.getElementById("streak").innerText = "🔥 Racha: " + streak.count;
     }
+    clearInterval(timerInterval);
+    startTimer();
 }
 
 // 🎯 CHECK
@@ -209,6 +213,7 @@ function checkGuess() {
         img.classList.add("win");
 
         score = lives * 10;
+        clearInterval(timerInterval);
         
 
         if (score > bestScore) {
@@ -271,6 +276,7 @@ function checkGuess() {
         gameOver = true;
 
         showEndScreen(false);
+        clearInterval(timerInterval);
     }
 
     // limpiar input
@@ -387,6 +393,34 @@ function launchConfetti() {
         });
 
     }, 200);
+}
+function startTimer() {
+
+    timeLeft = 120;
+
+    document.getElementById("timer").innerText = "⏱️ " + timeLeft + "s";
+
+    timerInterval = setInterval(() => {
+
+        timeLeft--;
+
+        document.getElementById("timer").innerText = "⏱️ " + timeLeft + "s";
+
+        if (timeLeft <= 0) {
+
+            clearInterval(timerInterval);
+
+            if (!gameOver) {
+                gameOver = true;
+
+                document.getElementById("result").innerText =
+                    "⏰ Tiempo agotado! Era: " + currentAlbum.name;
+
+                showEndScreen(false);
+            }
+        }
+
+    }, 1000);
 }
 
 // 🔍 AUTOCOMPLETE
