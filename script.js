@@ -182,13 +182,21 @@ function checkGuess() {
 
     if (gameOver || lives <= 0) return;
 
-    const input = document.getElementById("guessInput").value;
+    const inputBox = document.getElementById("guessInput");
+    const input = inputBox.value.trim();
+
     if (!input) return;
 
     const img = document.getElementById("albumImage");
+    const result = document.getElementById("result");
+
+    // limpiar sugerencias
     document.getElementById("suggestions").innerHTML = "";
 
-    if (similarity(input, currentAlbum.name) > 0.6) {
+    const sim = similarity(input, currentAlbum.name);
+
+    // 🎉 ACIERTO
+    if (sim > 0.6) {
 
         attempts.push("🟩");
         updateAttemptsUI();
@@ -208,24 +216,46 @@ function checkGuess() {
         saveStats(true);
         saveStreak(true);
 
+        result.innerText = "🎉 Correcto!";
+
         gameOver = true;
 
         showEndScreen(true);
         return;
     }
 
+    // ❌ FALLA
+
     attempts.push("🟥");
     updateAttemptsUI();
 
     wrongSound.play();
 
+    // 🔥 ANIMACIÓN SHAKE
+    inputBox.classList.add("input-error");
+    setTimeout(() => inputBox.classList.remove("input-error"), 300);
+
+    // 🧠 FEEDBACK INTELIGENTE (🔥🔥🔥)
+    if (sim > 0.5) {
+        result.innerText = "🔥 Muy cerca!";
+    } 
+    else if (sim > 0.3) {
+        result.innerText = "😐 Cerca...";
+    } 
+    else {
+        result.innerText = "❄️ Muy lejos";
+    }
+
+    // ❤️ VIDAS
     lives = Math.max(0, lives - 1);
     blurLevel -= 4;
+
     img.style.filter = `blur(${blurLevel}px)`;
 
     updateLivesUI();
     updateProgress();
 
+    // 💀 GAME OVER
     if (lives === 0) {
 
         gameOverSound.play();
@@ -233,12 +263,15 @@ function checkGuess() {
         saveStats(false);
         saveStreak(false);
 
+        result.innerText = "💀 Era: " + currentAlbum.name;
+
         gameOver = true;
 
         showEndScreen(false);
     }
 
-    document.getElementById("guessInput").value = "";
+    // limpiar input
+    inputBox.value = "";
 }
 
 // ❤️ CORAZONES
