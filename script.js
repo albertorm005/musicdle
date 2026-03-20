@@ -216,7 +216,7 @@ function checkGuess() {
         saveStats(true);
         saveStreak(true);
 
-        result.innerText = "🎉 Correcto!";
+        result.innerHTML = '<span class="correct-text">🎉 Correcto!</span>';
 
         gameOver = true;
 

@@ -29,34 +29,43 @@ body {
     transform: scale(1.1);
 }
 
-/* ✏️ INPUT */
+/* ✏️ INPUT (MEJORADO) */
 input {
     width: 80%;
     padding: 12px;
     font-size: 16px;
     border-radius: 10px;
-    border: none;
+    border: 1px solid #333;
     margin-top: 10px;
     outline: none;
+    background: #1e1e1e;
+    color: white;
 }
 
-/* 🔍 SUGERENCIAS (MEJORADO) */
+input::placeholder {
+    color: #aaa;
+}
+
+/* 🔍 SUGERENCIAS (FIX COMPLETO) */
 #suggestions {
     position: absolute;
     width: 80%;
     left: 10%;
-    background: #1a1a1a;
+    background: #1e1e1e;
     border-radius: 10px;
     margin-top: 5px;
     max-height: 180px;
     overflow-y: auto;
-    z-index: 999;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    z-index: 9999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    border: 1px solid #333;
 }
 
 #suggestions div {
-    padding: 10px;
+    padding: 12px;
     cursor: pointer;
+    color: #ffffff; /* 🔥 TEXTO BLANCO */
+    font-weight: 500;
     border-bottom: 1px solid #333;
 }
 
@@ -86,11 +95,25 @@ button:active {
     transform: scale(0.95);
 }
 
-/* 🎯 RESULTADO */
+/* 🎯 RESULTADO (MEJORADO) */
 #result {
     font-size: 18px;
     margin-top: 10px;
     min-height: 20px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* ✨ TEXTO CORRECTO */
+.correct-text {
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+/* 📊 STATS */
+#stats, #streak {
+    color: #ddd;
+    font-weight: 500;
 }
 
 /* 🎯 WORDLE */
@@ -182,7 +205,7 @@ button:active {
     box-shadow: 0 10px 40px rgba(0,0,0,0.7);
 }
 
-/* 📊 PROGRESO (MEJORADO) */
+/* 📊 PROGRESO */
 #progressContainer {
     width: 80%;
     height: 12px;
@@ -202,7 +225,7 @@ button:active {
 #progressText {
     font-size: 13px;
     margin-top: 5px;
-    color: #aaa;
+    color: #ccc;
 }
 
 /* 📱 MOBILE FIX */
