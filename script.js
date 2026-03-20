@@ -430,5 +430,29 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // 📤 SHARE
 function shareResult() {
-    alert("Resultado copiado (simulado)");
+
+    let text = "Musicdle 🎵\n";
+
+    // construir resultado tipo Wordle
+    let resultLine = "";
+
+    for (let i = 0; i < 5; i++) {
+
+        if (attempts[i] === "🟩") resultLine += "🟩";
+        else if (attempts[i] === "🟥") resultLine += "🟥";
+        else resultLine += "⬜";
+    }
+
+    text += resultLine + "\n";
+
+    const tries = attempts.filter(a => a === "🟩").length > 0
+        ? attempts.length
+        : "X";
+
+    text += "🔥 " + tries + " intentos";
+
+    // copiar al portapapeles
+    navigator.clipboard.writeText(text);
+
+    alert("📋 Resultado copiado!");
 }
