@@ -228,6 +228,18 @@ button:active {
     color: #ccc;
 }
 
+#homeScreen p {
+    color: #e0e0e0;
+    font-size: 16px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+#homeScreen h1 {
+    color: #ffffff;
+    text-shadow: 0 0 10px #6c5ce7;
+}
+
 /* 📱 MOBILE FIX */
 @media (max-width: 576px) {
 
