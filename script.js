@@ -179,6 +179,7 @@ async function startGame() {
     }
     clearInterval(timerInterval);
     startTimer();
+    showRanking();
 }
 
 // 🎯 CHECK
@@ -223,6 +224,7 @@ function checkGuess() {
 
         saveStats(true);
         saveStreak(true);
+        saveScore(score);
 
         result.innerHTML = '<span class="correct-text">🎉 Correcto!</span>';
 
@@ -421,6 +423,33 @@ function startTimer() {
         }
 
     }, 1000);
+}
+
+function saveScore(score) {
+
+    let scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+    scores.push(score);
+
+    // ordenar de mayor a menor
+    scores.sort((a, b) => b - a);
+
+    // guardar solo top 5
+    scores = scores.slice(0, 5);
+
+    localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+function showRanking() {
+
+    const container = document.getElementById("ranking");
+    const scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+    container.innerHTML = "<h3>🏆 Mejores puntuaciones</h3>";
+
+    scores.forEach((s, i) => {
+        container.innerHTML += `<p>${i + 1}. ${s} pts</p>`;
+    });
 }
 
 // 🔍 AUTOCOMPLETE
