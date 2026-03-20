@@ -202,11 +202,14 @@ function checkGuess() {
         updateAttemptsUI();
 
         correctSound.play();
+        
+        launchConfetti();
 
         img.style.filter = "blur(0)";
         img.classList.add("win");
 
         score = lives * 10;
+        
 
         if (score > bestScore) {
             bestScore = score;
@@ -364,6 +367,26 @@ function goHome() {
     document.getElementById("guessInput").value = "";
     document.getElementById("suggestions").innerHTML = "";
     document.getElementById("attemptsContainer").innerHTML = "";
+}
+
+function launchConfetti() {
+
+    const duration = 1500;
+    const end = Date.now() + duration;
+
+    const interval = setInterval(function() {
+
+        if (Date.now() > end) {
+            return clearInterval(interval);
+        }
+
+        confetti({
+            particleCount: 50,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+
+    }, 200);
 }
 
 // 🔍 AUTOCOMPLETE
