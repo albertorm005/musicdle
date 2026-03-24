@@ -119,14 +119,26 @@ function getDailyIndex() {
 // 🎧 API
 async function getAlbum() {
 
-    let artist = artists[Math.floor(Math.random() * artists.length)];
+    let artist;
+
+    // 🎯 ARTISTAS POR ÉPOCA (CLAVE)
+    if (eraArtists[selectedEra] && eraArtists[selectedEra].length > 0) {
+
+        const list = eraArtists[selectedEra];
+        artist = list[Math.floor(Math.random() * list.length)];
+
+    } else {
+
+        // fallback (mix)
+        artist = artists[Math.floor(Math.random() * artists.length)];
+    }
 
     const res = await fetch(`https://itunes.apple.com/search?term=${artist}&entity=album&limit=20`);
     const data = await res.json();
 
     let albums = data.results;
 
-    // 🎯 FILTRAR POR ÉPOCA
+    // 🎯 FILTRAR POR ÉPOCA (doble seguridad)
     let filteredAlbums = albums.filter(album => {
 
         if (!album.releaseDate) return false;
@@ -141,29 +153,21 @@ async function getAlbum() {
         return true; // urbana y mix
     });
 
-    // 🎧 FILTRAR POR GÉNERO (aproximado)
-    filteredAlbums = filteredAlbums.filter(album => {
+    // 🎧 FILTRAR POR GÉNERO (solo si NO es urbana)
+    if (selectedEra !== "urbana") {
 
-        const text = (album.collectionName + " " + album.artistName).toLowerCase();
+        filteredAlbums = filteredAlbums.filter(album => {
 
-        if (selectedGenre === "rock") {
-            return text.includes("rock");
-        }
+            const text = (album.collectionName + " " + album.artistName).toLowerCase();
 
-        if (selectedGenre === "pop") {
-            return text.includes("pop");
-        }
+            if (selectedGenre === "rock") return text.includes("rock");
+            if (selectedGenre === "pop") return text.includes("pop");
+            if (selectedGenre === "electronic") return text.includes("dj") || text.includes("electronic");
+            if (selectedGenre === "spanish") return text.includes("latin") || text.includes("es");
 
-        if (selectedGenre === "electronic") {
-            return text.includes("dj") || text.includes("electronic");
-        }
-
-        if (selectedGenre === "spanish") {
-            return text.includes("latin") || text.includes("es");
-        }
-
-        return true; // all
-    });
+            return true; // all
+        });
+    }
 
     // ⚠️ FALLBACK SI NO HAY RESULTADOS
     if (filteredAlbums.length === 0) {
@@ -532,6 +536,30 @@ function selectGenre(genre) {
 
     startGame();
 }
+const eraArtists = {
+
+    "80s": [
+        "Michael Jackson", "Madonna", "Queen", "AC/DC", "The Police"
+    ],
+
+    "90s": [
+        "Nirvana", "Backstreet Boys", "Spice Girls", "Oasis", "Red Hot Chili Peppers"
+    ],
+
+    "2000s": [
+        "Eminem", "Shakira", "Coldplay", "Linkin Park", "Britney Spears"
+    ],
+
+    "2010s": [
+        "Drake", "Adele", "Ed Sheeran", "Bruno Mars", "The Weeknd"
+    ],
+
+    "urbana": [
+        "Bad Bunny", "Anuel AA", "Myke Towers", "Feid", "Rauw Alejandro"
+    ],
+
+    "mix": []
+};
 
 // 🔍 AUTOCOMPLETE
 window.addEventListener("DOMContentLoaded", () => {
