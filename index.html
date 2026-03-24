@@ -17,16 +17,25 @@
 
     <!-- HOME -->
     <div id="homeScreen">
-        <h1 class="mb-4">🎵 Musicdle</h1>
-        <p>Adivina el álbum con la menor cantidad de intentos 🎯</p>
+        <h1>🎵 Musicdle</h1>
+        <p>Elige una época</p>
 
-        <button class="btn btn-primary w-100 mb-2" onclick="startMode('daily')">
-            🎯 Modo Diario
-        </button>
+        <button onclick="selectEra('80s')">🕺 80s</button>
+        <button onclick="selectEra('90s')">💿 90s</button>
+        <button onclick="selectEra('2000s')">🔥 2000s</button>
+        <button onclick="selectEra('2010s')">🎧 2010s</button>
+        <button onclick="selectEra('urbana')">🎤 Urbana</button>
+        <button onclick="selectEra('mix')">🌍 Mixto</button>
+    </div>
 
-        <button class="btn btn-secondary w-100" onclick="startMode('infinite')">
-            ♾️ Modo Infinito
-        </button>
+    <div id="genreScreen" style="display:none;">
+        <h2>🎧 Elige género</h2>
+
+        <button onclick="selectGenre('rock')">🎸 Rock</button>
+        <button onclick="selectGenre('pop')">🎤 Pop</button>
+        <button onclick="selectGenre('spanish')">🇪🇸 Español</button>
+        <button onclick="selectGenre('electronic')">🎧 Electrónica</button>
+        <button onclick="selectGenre('all')">🎲 Aleatorio</button>
     </div>
 
     <!-- GAME -->

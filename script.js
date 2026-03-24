@@ -8,6 +8,8 @@ let hintsUsed = 0;
 let gameMode = "daily";
 let timeLeft;
 let timerInterval;
+let selectedEra = "urbana";
+let selectedGenre = "all";
 
 let score = 0;
 let bestScore = parseInt(localStorage.getItem("bestScore")) || 0;
@@ -117,18 +119,59 @@ function getDailyIndex() {
 // 🎧 API
 async function getAlbum() {
 
-    const artist = gameMode === "daily"
-        ? artists[getDailyIndex() % artists.length]
-        : artists[Math.floor(Math.random() * artists.length)];
+    let artist = artists[Math.floor(Math.random() * artists.length)];
 
     const res = await fetch(`https://itunes.apple.com/search?term=${artist}&entity=album&limit=20`);
     const data = await res.json();
 
-    const index = gameMode === "daily"
-        ? getDailyIndex() % data.results.length
-        : Math.floor(Math.random() * data.results.length);
+    let albums = data.results;
 
-    return data.results[index];
+    // 🎯 FILTRAR POR ÉPOCA
+    let filteredAlbums = albums.filter(album => {
+
+        if (!album.releaseDate) return false;
+
+        const year = new Date(album.releaseDate).getFullYear();
+
+        if (selectedEra === "80s") return year >= 1980 && year <= 1989;
+        if (selectedEra === "90s") return year >= 1990 && year <= 1999;
+        if (selectedEra === "2000s") return year >= 2000 && year <= 2009;
+        if (selectedEra === "2010s") return year >= 2010 && year <= 2019;
+
+        return true; // urbana y mix
+    });
+
+    // 🎧 FILTRAR POR GÉNERO (aproximado)
+    filteredAlbums = filteredAlbums.filter(album => {
+
+        const text = (album.collectionName + " " + album.artistName).toLowerCase();
+
+        if (selectedGenre === "rock") {
+            return text.includes("rock");
+        }
+
+        if (selectedGenre === "pop") {
+            return text.includes("pop");
+        }
+
+        if (selectedGenre === "electronic") {
+            return text.includes("dj") || text.includes("electronic");
+        }
+
+        if (selectedGenre === "spanish") {
+            return text.includes("latin") || text.includes("es");
+        }
+
+        return true; // all
+    });
+
+    // ⚠️ FALLBACK SI NO HAY RESULTADOS
+    if (filteredAlbums.length === 0) {
+        filteredAlbums = albums;
+    }
+
+    // 🎲 SELECCIÓN FINAL
+    return filteredAlbums[Math.floor(Math.random() * filteredAlbums.length)];
 }
 
 // 🏠 MODOS
@@ -450,6 +493,44 @@ function showRanking() {
     scores.forEach((s, i) => {
         container.innerHTML += `<p>${i + 1}. ${s} pts</p>`;
     });
+}
+function selectEra(era) {
+
+    selectedEra = era;
+
+    // ocultar home
+    document.getElementById("homeScreen").style.display = "none";
+
+    // mostrar selección de género
+    document.getElementById("genreScreen").style.display = "block";
+}
+function filterByEra(albums) {
+
+    return albums.filter(album => {
+
+        const year = new Date(album.releaseDate).getFullYear();
+
+        if (selectedEra === "80s") return year >= 1980 && year <= 1989;
+        if (selectedEra === "90s") return year >= 1990 && year <= 1999;
+        if (selectedEra === "2000s") return year >= 2000 && year <= 2009;
+        if (selectedEra === "2010s") return year >= 2010 && year <= 2019;
+        if (selectedEra === "urbana") return true;
+        if (selectedEra === "mix") return true;
+
+        return true;
+    });
+}
+function selectGenre(genre) {
+
+    selectedGenre = genre;
+
+    // ocultar género
+    document.getElementById("genreScreen").style.display = "none";
+
+    // mostrar juego
+    document.getElementById("gameScreen").style.display = "block";
+
+    startGame();
 }
 
 // 🔍 AUTOCOMPLETE
