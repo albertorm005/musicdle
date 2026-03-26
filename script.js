@@ -121,16 +121,33 @@ async function getAlbum() {
 
     let artist;
 
-    // 🎯 ARTISTAS POR ÉPOCA (CLAVE)
-    if (eraArtists[selectedEra] && eraArtists[selectedEra].length > 0) {
+    // 🎤 URBANA (SIN GÉNERO)
+    if (selectedEra === "urbana") {
 
-        const list = eraArtists[selectedEra];
+        const list = eraGenreArtists["urbana"].all;
         artist = list[Math.floor(Math.random() * list.length)];
 
     } else {
 
-        // fallback (mix)
-        artist = artists[Math.floor(Math.random() * artists.length)];
+        const eraData = eraGenreArtists[selectedEra];
+
+        // 🎧 SI hay género seleccionado
+        if (selectedGenre !== "all" && eraData[selectedGenre]) {
+
+            const list = eraData[selectedGenre];
+            artist = list[Math.floor(Math.random() * list.length)];
+
+        } else {
+
+            // 🎲 aleatorio dentro de la época
+            let allArtists = [];
+
+            Object.values(eraData).forEach(arr => {
+                allArtists = allArtists.concat(arr);
+            });
+
+            artist = allArtists[Math.floor(Math.random() * allArtists.length)];
+        }
     }
 
     const res = await fetch(`https://itunes.apple.com/search?term=${artist}&entity=album&limit=20`);
@@ -138,7 +155,7 @@ async function getAlbum() {
 
     let albums = data.results;
 
-    // 🎯 FILTRAR POR ÉPOCA (doble seguridad)
+    // 🎯 FILTRO FINAL POR AÑO (seguridad)
     let filteredAlbums = albums.filter(album => {
 
         if (!album.releaseDate) return false;
@@ -150,42 +167,16 @@ async function getAlbum() {
         if (selectedEra === "2000s") return year >= 2000 && year <= 2009;
         if (selectedEra === "2010s") return year >= 2010 && year <= 2019;
 
-        return true; // urbana y mix
+        return true;
     });
 
-    // 🎧 FILTRAR POR GÉNERO (solo si NO es urbana)
-    if (selectedEra !== "urbana") {
-
-        filteredAlbums = filteredAlbums.filter(album => {
-
-            const text = (album.collectionName + " " + album.artistName).toLowerCase();
-
-            if (selectedGenre === "rock") return text.includes("rock");
-            if (selectedGenre === "pop") return text.includes("pop");
-            if (selectedGenre === "electronic") return text.includes("dj") || text.includes("electronic");
-            if (selectedGenre === "spanish") return text.includes("latin") || text.includes("es");
-
-            return true; // all
-        });
-    }
-
-    // ⚠️ FALLBACK SI NO HAY RESULTADOS
+    // fallback
     if (filteredAlbums.length === 0) {
         filteredAlbums = albums;
     }
 
-    // 🎲 SELECCIÓN FINAL
     return filteredAlbums[Math.floor(Math.random() * filteredAlbums.length)];
 }
-
-// 🏠 MODOS
-function startMode(mode) {
-    gameMode = mode;
-    document.getElementById("homeScreen").style.display = "none";
-    document.getElementById("gameScreen").style.display = "block";
-    startGame();
-}
-
 // 🚀 START
 async function startGame() {
 
@@ -536,29 +527,45 @@ function selectGenre(genre) {
 
     startGame();
 }
-const eraArtists = {
+const eraGenreArtists = {
 
-    "80s": [
-        "Michael Jackson", "Madonna", "Queen", "AC/DC", "The Police"
-    ],
+    "80s": {
+        rock: ["Queen", "AC/DC", "Bon Jovi"],
+        pop: ["Michael Jackson", "Madonna"],
+        spanish: ["Mecano", "Hombres G"],
+        electronic: ["Depeche Mode"],
+        all: []
+    },
 
-    "90s": [
-        "Nirvana", "Backstreet Boys", "Spice Girls", "Oasis", "Red Hot Chili Peppers"
-    ],
+    "90s": {
+        rock: ["Nirvana", "Oasis", "Red Hot Chili Peppers"],
+        pop: ["Spice Girls", "Backstreet Boys"],
+        spanish: ["Alejandro Sanz", "La Oreja de Van Gogh"],
+        electronic: ["The Prodigy"],
+        all: []
+    },
 
-    "2000s": [
-        "Eminem", "Shakira", "Coldplay", "Linkin Park", "Britney Spears"
-    ],
+    "2000s": {
+        rock: ["Linkin Park", "Green Day"],
+        pop: ["Britney Spears", "Shakira"],
+        spanish: ["El Canto del Loco"],
+        electronic: ["Daft Punk"],
+        all: []
+    },
 
-    "2010s": [
-        "Drake", "Adele", "Ed Sheeran", "Bruno Mars", "The Weeknd"
-    ],
+    "2010s": {
+        rock: ["Imagine Dragons"],
+        pop: ["Adele", "Ed Sheeran"],
+        spanish: ["Rosalia"],
+        electronic: ["Avicii"],
+        all: []
+    },
 
-    "urbana": [
-        "Bad Bunny", "Anuel AA", "Myke Towers", "Feid", "Rauw Alejandro"
-    ],
-
-    "mix": []
+    "urbana": {
+        all: [
+            "Bad Bunny", "Anuel AA", "Myke Towers", "Feid", "Rauw Alejandro"
+        ]
+    }
 };
 
 // 🔍 AUTOCOMPLETE
