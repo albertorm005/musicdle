@@ -493,10 +493,20 @@ function selectEra(era) {
 
     selectedEra = era;
 
-    // ocultar home
-    document.getElementById("homeScreen").style.display = "none";
+    // 🔥 SI ES URBANA → SALTAR GÉNERO
+    if (era === "urbana") {
 
-    // mostrar selección de género
+        selectedGenre = "all";
+
+        document.getElementById("homeScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "block";
+
+        startGame();
+        return;
+    }
+
+    // 👉 RESTO → mostrar géneros
+    document.getElementById("homeScreen").style.display = "none";
     document.getElementById("genreScreen").style.display = "block";
 }
 function filterByEra(albums) {

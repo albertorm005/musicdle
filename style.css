@@ -264,3 +264,59 @@ button:active {
         width: 90%;
     }
 }
+/* 🧱 PANTALLAS */
+.screen {
+    padding: 20px;
+    text-align: center;
+}
+
+/* 🧠 TITULOS PRO */
+.title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #6c5ce7;
+}
+
+.subtitle {
+    color: #ccc;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* 🔲 GRID MODOS */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* 🔘 BOTONES PRO */
+.mode-btn {
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 12px;
+    background: #1f1f1f;
+    border: 1px solid #333;
+    color: white;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.mode-btn:hover {
+    background: #2a2a2a;
+    transform: scale(1.05);
+}
+
+/* 🌟 DESTACADO */
+.highlight {
+    background: #6c5ce7;
+    border: none;
+}
+
+/* 📱 MOBILE PRO */
+@media (max-width: 500px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

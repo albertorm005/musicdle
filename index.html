@@ -16,27 +16,32 @@
 <div class="container text-center mt-4">
 
     <!-- HOME -->
-    <div id="homeScreen">
-        <h1>🎵 Musicdle</h1>
-        <p>Elige una época</p>
+<div id="homeScreen" class="screen">
+    <h1 class="title">🎵 Musicdle</h1>
+    <p class="subtitle">Elige una época</p>
 
-        <button onclick="selectEra('80s')">🕺 80s</button>
-        <button onclick="selectEra('90s')">💿 90s</button>
-        <button onclick="selectEra('2000s')">🔥 2000s</button>
-        <button onclick="selectEra('2010s')">🎧 2010s</button>
-        <button onclick="selectEra('urbana')">🎤 Urbana</button>
-        <button onclick="selectEra('mix')">🌍 Mixto</button>
+    <div class="grid">
+        <button class="mode-btn" onclick="selectEra('80s')">🕺 80s</button>
+        <button class="mode-btn" onclick="selectEra('90s')">💿 90s</button>
+        <button class="mode-btn" onclick="selectEra('2000s')">🔥 2000s</button>
+        <button class="mode-btn" onclick="selectEra('2010s')">🎧 2010s</button>
+        <button class="mode-btn highlight" onclick="selectEra('urbana')">🎤 Urbana</button>
+        <button class="mode-btn" onclick="selectEra('mix')">🌍 Mixto</button>
     </div>
+</div>
 
-    <div id="genreScreen" style="display:none;">
-        <h2>🎧 Elige género</h2>
+<!-- GÉNEROS -->
+<div id="genreScreen" class="screen" style="display:none;">
+    <h2 class="title">🎧 Elige género</h2>
 
-        <button onclick="selectGenre('rock')">🎸 Rock</button>
-        <button onclick="selectGenre('pop')">🎤 Pop</button>
-        <button onclick="selectGenre('spanish')">🇪🇸 Español</button>
-        <button onclick="selectGenre('electronic')">🎧 Electrónica</button>
-        <button onclick="selectGenre('all')">🎲 Aleatorio</button>
+    <div class="grid">
+        <button class="mode-btn" onclick="selectGenre('rock')">🎸 Rock</button>
+        <button class="mode-btn" onclick="selectGenre('pop')">🎤 Pop</button>
+        <button class="mode-btn" onclick="selectGenre('spanish')">🇪🇸 Español</button>
+        <button class="mode-btn" onclick="selectGenre('electronic')">🎧 Electrónica</button>
+        <button class="mode-btn highlight" onclick="selectGenre('all')">🎲 Aleatorio</button>
     </div>
+</div>
 
     <!-- GAME -->
     <div id="gameScreen" style="display:none;">
